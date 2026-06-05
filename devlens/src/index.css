@@ -1,0 +1,14 @@
+@import "tailwindcss";
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+}
