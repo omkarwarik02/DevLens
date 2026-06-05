@@ -1,0 +1,7 @@
+# Frontend
+devlens/node_modules
+devlens/.env
+
+# Backend
+devlens-backend/node_modules
+devlens-backend/.env
