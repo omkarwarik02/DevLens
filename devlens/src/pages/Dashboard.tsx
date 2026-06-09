@@ -1,4 +1,4 @@
-import { Sparkle, Sparkles } from "lucide-react";
+import {  Sparkles } from "lucide-react";
 
 function Dashboard() {
   return (

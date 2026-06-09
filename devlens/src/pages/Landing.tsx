@@ -1,4 +1,4 @@
-import { Bug, Shield, Zap, History, Gauge } from "lucide-react";
+import { Bug, Shield, History, Gauge } from "lucide-react";
 import download from '../assets/download.jpg'
 function Landing() {
   return (
