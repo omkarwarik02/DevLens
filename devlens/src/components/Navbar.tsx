@@ -1,6 +1,16 @@
 import download from '../assets/download.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserRound } from 'lucide-react'  
 function Navbar() {
+  const name = localStorage.getItem("name")?.trim().split(" ")[0]
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("name")
+    navigate("/login")
+  }
+
   return (
     <nav className="bg-[#0d1117] border-b border-[#30363d] h-[68px] flex items-center justify-between px-24 fixed top-0 left-0 right-0 z-50">
         
@@ -17,10 +27,25 @@ function Navbar() {
             </div>
 
             {/* right */}
-            <div className="flex items-center gap-8 font-bold tracking-wide">
+            {name ? (
+              <>
+            
+              <div className='flex flex-row gap-3 items-center justify-center'>
+                <UserRound size={18} color="white" />
+                  <h1 className='mr-3'>{name}</h1>
+                <button className='bg-purple-600 text-white px-4 py-2 rounded-md text-sm' onClick={handleLogout}>Logout</button>
+              </div>
+              
+              </>
+            ):(
+              <>
+              <div className="flex items-center gap-8 font-bold tracking-wide">
                 <Link to="/" className='text-white text-sm'>Login</Link>
                 <button className='bg-purple-600 text-white px-4 py-2 rounded-md text-sm'>Get Started</button>
             </div>
+            </>
+            )}
+            
 
     </nav>
   )

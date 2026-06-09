@@ -1,3 +1,4 @@
+import ProtectedRoute from "./components/ProtectedRoute"
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Landing from './pages/Landing'
@@ -16,8 +17,12 @@ function App() {
         <Route path="/" element={<Landing></Landing>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<Signup></Signup>}></Route>
-        <Route path="/dashboard" element={ <Dashboard></Dashboard>}></Route>
-      </Routes>
+        <Route path="/dashboard" element={ 
+        <ProtectedRoute>
+           <Dashboard></Dashboard>
+        </ProtectedRoute>
+        } />
+          </Routes>
     </div>
   )
 }
