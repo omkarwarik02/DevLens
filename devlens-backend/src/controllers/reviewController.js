@@ -36,4 +36,15 @@ const reviewCode = async (req, res) => {
   }
 };
 
-module.exports = { reviewCode };
+const reviewHistory = async (req,res) => {
+  try{
+    const doc = await  Review.find({userId: req.user.id}).sort({createdAt:-1})
+    
+    res.status(200).json(doc)
+
+  }catch(err){
+    res.status(500).json({message:"Something went wrong"})
+  }
+}
+
+module.exports = { reviewCode,reviewHistory };
