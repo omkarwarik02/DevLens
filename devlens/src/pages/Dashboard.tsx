@@ -1,6 +1,68 @@
-import {  Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
+import type { DashboardAction, DashboardState } from "../types/dashboard.types";
+import { useReducer } from "react";
+
+const initialState: DashboardState = {
+  code: "",
+  language: "javascript",
+  isLoading: false,
+  aiReview: "",
+  error: "",
+};
+const reducer = (
+  state: DashboardState,
+  action: DashboardAction,
+): DashboardState => {
+  switch (action.type) {
+    case "SET_CODE":
+      return { ...state, code: action.payload };
+
+    case "SET_LANGUAGE":
+      return { ...state, language: action.payload };
+
+    case "REVIEW_START":
+      return { ...state, isLoading: true, error: "", aiReview: "" };
+
+    case "REVIEW_SUCCESS":
+      return { ...state, isLoading: false, aiReview: action.payload };
+
+    case "REVIEW_ERROR":
+      return { ...state, isLoading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
 
 function Dashboard() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const handleReview = async () => {
+    dispatch({ type: "REVIEW_START" });
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:5000/api/review", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          code: state.code,
+          language: state.language,
+        }),
+      });
+
+      const data = await res.json();
+      dispatch({ type: "REVIEW_SUCCESS", payload: data.aiReview });
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: "REVIEW_ERROR", payload: "Something went wrong" });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0d1117] p-6">
       <div className="flex gap-6 mt-20">
@@ -10,7 +72,13 @@ function Dashboard() {
           <div>
             <h3 className="mt-3 text-[11px]">PROGRAMMING LANGUAGE</h3>
 
-            <select className="h-[46px] w-full bg-[#0D1117] p-2 mt-3">
+            <select
+              className="h-[46px] w-full bg-[#0D1117] p-2 mt-3"
+              value={state.language}
+              onChange={(e) =>
+                dispatch({ type: "SET_LANGUAGE", payload: e.target.value })
+              }
+            >
               <option value="javascript">JavaScript</option>
               <option value="typescript">TypeScript</option>
               <option value="java">Java</option>
@@ -23,12 +91,18 @@ function Dashboard() {
               <textarea
                 className="w-full h-96 bg-[#0d1117] text-white font-mono text-sm p-3 rounded-lg border border-gray-700 resize-none outline-none mt-3"
                 placeholder="Paste your code here..."
+                value={state.code}
+                onChange={(e) =>
+                  dispatch({ type: "SET_CODE", payload: e.target.value })
+                }
               />
             </div>
             <div className="flex gap-6 items-stretch">
-           
-              <button className="w-full mt-4 py-3 bg-blue-600 text-white rounded-lg font-semibold">
-                 Review Code
+              <button
+                className="w-full mt-4 py-3 bg-blue-600 text-white rounded-lg font-semibold"
+                onClick={handleReview}
+              >
+                Review Code
               </button>
             </div>
           </div>
@@ -38,20 +112,31 @@ function Dashboard() {
         <div className="w-1/2 bg-[#161b22] rounded-xl p-6 flex flex-col">
           <h1>AI Review</h1>
           <hr className="border-gray-700 my-4"></hr>
-          <div className="flex flex-col flex-1 bg-[#282A32] items-center justify-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center flex-row">
-              <Sparkles color="#B4C5FF" />
-            </div>
-            <p>Your review will appear here...</p>
 
-            <div className="flex flex-col items-center justify-center mt-3">
-              <small className="text-[#C3C6D7]">
-                Paste your code snippet on the left and click
-              </small>
-              <small className="text-[#C3C6D7]">
-                "Review Code" to start the analysis.
-              </small>
-            </div>
+          <div className="flex flex-col flex-1 bg-[#282A32] items-center justify-center gap-3">
+            {state.isLoading ? (
+              <p>Analyzing your code...</p>
+            ) : state.error ? (
+              <p className="text-red-400">{state.error}</p>
+            ) : state.aiReview ? (
+              <p className="text-white">{state.aiReview}</p>
+            ) : (
+              <>
+                <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center flex-row">
+                  <Sparkles color="#B4C5FF" />
+                </div>
+                <p>Your review will appear here...</p>
+
+                <div className="flex flex-col items-center justify-center mt-3">
+                  <small className="text-[#C3C6D7]">
+                    Paste your code snippet on the left and click
+                  </small>
+                  <small className="text-[#C3C6D7]">
+                    "Review Code" to start the analysis.
+                  </small>
+                </div>
+              </>
+            )}
           </div>
           <hr className="border-gray-700 my-4"></hr>
           <div className="flex justify-end gap-3">
