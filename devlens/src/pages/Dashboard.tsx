@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 import type { DashboardAction, DashboardState } from "../types/dashboard.types";
 import { useReducer } from "react";
+import ReactMarkdown from 'react-markdown'
 
 const initialState: DashboardState = {
   code: "",
@@ -119,7 +120,7 @@ function Dashboard() {
             ) : state.error ? (
               <p className="text-red-400">{state.error}</p>
             ) : state.aiReview ? (
-              <p className="text-white">{state.aiReview}</p>
+              <ReactMarkdown>{state.aiReview}</ReactMarkdown>
             ) : (
               <>
                 <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center flex-row">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import ReactMarkdown from 'react-markdown'
 function History() {
   const [reviews,setReviews] = useState([])
   
@@ -33,7 +33,8 @@ function History() {
             <pre className="bg-[#0d1117] p-3 rounded text-sm font-mono text-gray-300 overflow-hidden line-clamp-3">
               {review.code}
             </pre>
-            <p className="text-gray-400 text-sm mt-3 line-clamp-2">{review.aiReview}</p>
+            <div className="mt-3"> <ReactMarkdown>{review.aiReview}</ReactMarkdown></div>
+          
           </div>
         ))}
       </div>
