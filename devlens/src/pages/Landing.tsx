@@ -1,6 +1,8 @@
 import { Bug, Shield, History, Gauge } from "lucide-react";
 import download from '../assets/download.jpg'
+import { useNavigate } from "react-router-dom";
 function Landing() {
+  const navigate = useNavigate()
   return (
     <>
       <section className="pt-[68px]">
@@ -26,10 +28,10 @@ function Landing() {
             </div>
 
             <div className="fex-col mt-20">
-              <button className=" bg-purple-600 rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide">
+              <button className=" bg-purple-600 rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide cursor-pointer" onClick={()=> navigate("/login")}>
                 Get Started For Free
               </button>
-              <button className="rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide ml-20 border border-white">
+              <button className="rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide ml-20 border border-white  cursor-pointer">
                 View Documentation
               </button>
             </div>
@@ -165,7 +167,7 @@ approval.</p>
   <div className=" flex flex-col bg-purple-600 h-[212px] w-full items-center justify-center">
           <h1 className="text-white font-bold items-center text-[24px] mt-3">Ready to Ship Better Code?</h1>
           <p className="mt-2.5">Join 10,000+ developers who use DevLens to automate their code review cycle.</p>
-          <button className="bg-white text-purple-500 mt-2.5 h-[56px] px-8 py-1">Start your First Review</button>
+          <button className="bg-white text-purple-500 mt-2.5 h-[56px] px-8 py-1  cursor-pointer" onClick={()=> navigate("/login")}>Start your First Review</button>
         </div>
         </div>
       </section>

@@ -5,6 +5,7 @@ import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
+import History from "./pages/History"
 
 function App() {
   const location = useLocation()
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Landing></Landing>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<Signup></Signup>}></Route>
+        <Route path="/history" element={<History></History>}></Route>
         <Route path="/dashboard" element={ 
         <ProtectedRoute>
            <Dashboard></Dashboard>

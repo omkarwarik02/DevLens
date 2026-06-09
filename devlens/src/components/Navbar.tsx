@@ -16,7 +16,7 @@ function Navbar() {
         
             <div className='flex items-center gap-2 '>
                 <img src={download} alt='devlens' className='w-8 h-8'></img>
-                <span className='text-xl font-bold text-white ml-1.5'>DevLens</span>
+                <span className='text-xl font-bold text-white ml-1.5 cursor-pointer'onClick={()=> navigate("/dashboard")}>DevLens</span>
             </div>
             {/*mid*/}
 
@@ -24,6 +24,7 @@ function Navbar() {
                 <Link to="/" className="text-white text-sm  hover:text-purple-400">Features</Link>
                   <Link to="/" className="text-white text-sm  hover:text-purple-400">How it Works</Link>
                 <Link to="/" className="text-white text-sm  hover:text-purple-400">Pricing</Link>
+               {name && <Link to="/history" className="text-white text-sm hover:text-purple-400">History</Link>}
             </div>
 
             {/* right */}
@@ -33,15 +34,15 @@ function Navbar() {
               <div className='flex flex-row gap-3 items-center justify-center'>
                 <UserRound size={18} color="white" />
                   <h1 className='mr-3'>{name}</h1>
-                <button className='bg-purple-600 text-white px-4 py-2 rounded-md text-sm' onClick={handleLogout}>Logout</button>
+                <button className='bg-purple-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer' onClick={handleLogout}>Logout</button>
               </div>
               
               </>
             ):(
               <>
               <div className="flex items-center gap-8 font-bold tracking-wide">
-                <Link to="/" className='text-white text-sm'>Login</Link>
-                <button className='bg-purple-600 text-white px-4 py-2 rounded-md text-sm'>Get Started</button>
+                <Link to="/login" className='text-white text-sm'>Login</Link>
+                <button className='bg-purple-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer'>Get Started</button>
             </div>
             </>
             )}
