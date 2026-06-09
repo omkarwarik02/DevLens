@@ -2,6 +2,7 @@ import { useState } from "react"
 import download from "../assets/download.jpg"
 import { FaGithub } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom"
+import API_URL from "../config"
 
 function Signup() {
   const [name,setName] =useState("")
@@ -17,7 +18,7 @@ const handleSignUp = async () => {
       alert("Password do not match!")
       return
     }
-    const res = await fetch("http://localhost:5000/api/auth/signup",{
+    const res = await fetch(`${API_URL}/api/auth/signup`,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({name,email,password})

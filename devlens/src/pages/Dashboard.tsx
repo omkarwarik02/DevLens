@@ -2,6 +2,7 @@ import { Sparkles } from "lucide-react";
 import type { DashboardAction, DashboardState } from "../types/dashboard.types";
 import { useReducer } from "react";
 import ReactMarkdown from 'react-markdown'
+import API_URL from "../config"
 
 const initialState: DashboardState = {
   code: "",
@@ -44,7 +45,7 @@ function Dashboard() {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5000/api/review", {
+      const res = await fetch(`${API_URL}/api/review`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import ReactMarkdown from 'react-markdown'
+import API_URL from "../config"
 function History() {
   const [reviews,setReviews] = useState([])
   
   useEffect(()=>{
-    fetch("http://localhost:5000/api/review/history", {
+    fetch(`${API_URL}/api/review/history`, {
         headers: {
     "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
