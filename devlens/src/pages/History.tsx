@@ -17,7 +17,7 @@ function History() {
 
   return (
     <>
-      <div className="min-h-screen bg-[#0d1117] p-6 pt-25 ">
+      <div className="min-h-screen bg-[#0d1117] p-6 pt-8 ">
         <div className="flex flex-col mb-6 ">
           <h1 className="font-bold text-2xl tracking-wide text-white">Review History</h1>
           <small className="text-gray-400 mt-1">A chronological archive of your recent code audits and AI suggestions.</small>

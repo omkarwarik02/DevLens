@@ -67,7 +67,7 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#0d1117] p-6">
-      <div className="flex gap-6 mt-20">
+      <div className="flex gap-6 mt-3">
         {/**left panel */}
         <div className="w-1/2 bg-[#161b22] rounded-xl p-6">
           <h1 className="font-bold text-2xl">Code Review</h1>

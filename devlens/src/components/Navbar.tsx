@@ -21,9 +21,9 @@ function Navbar() {
             {/*mid*/}
 
             <div className="flex items-center gap-8 font-bold tracking-wide hover: ">
-                <Link to="/" className="text-white text-sm  hover:text-purple-400">Features</Link>
-                  <Link to="/" className="text-white text-sm  hover:text-purple-400">How it Works</Link>
-                <Link to="/" className="text-white text-sm  hover:text-purple-400">Pricing</Link>
+                <Link to="/#features" className="text-white text-sm  hover:text-purple-400">Features</Link>
+                  <Link to="/#how-it-works" className="text-white text-sm  hover:text-purple-400">How it Works</Link>
+                <Link to="/#pricing" className="text-white text-sm  hover:text-purple-400">Pricing</Link>
                {name && <Link to="/history" className="text-white text-sm hover:text-purple-400">History</Link>}
             </div>
 

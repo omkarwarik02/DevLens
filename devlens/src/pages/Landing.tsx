@@ -5,7 +5,7 @@ function Landing() {
   const navigate = useNavigate()
   return (
     <>
-      <section className="pt-[68px]">
+      <section>
         {/* main div*/}
         <div className="flex justify-around min-h-screen ">
           {/* left div*/}
@@ -31,7 +31,7 @@ function Landing() {
               <button className=" bg-purple-600 rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide cursor-pointer" onClick={()=> navigate("/login")}>
                 Get Started For Free
               </button>
-              <button className="rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide ml-20 border border-white  cursor-pointer">
+              <button className="rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide ml-20 border border-white  cursor-pointer" onClick={() => navigate("/docs")}>
                 View Documentation
               </button>
             </div>
@@ -63,7 +63,7 @@ function Landing() {
       </section>
 
       {/**section2 */}
-      <section id="ssec-2">
+      <section id="features">
         <div className="flex flex-col min-h-screen items-center  ">
           <div className="text-center pt-30">
             <h1 className="text-[24px] font-bold tracking-wide">
@@ -112,8 +112,7 @@ function Landing() {
         </div>
       </section>
 
-      {/** */}
-      <section>
+      <section id="how-it-works">
         <div className="flex flex-col min-h-screen items-center ">
           <div className="text-center pt-30">
             <h1 className="text-[24px] font-bold tracking-wide">How It Works</h1>
@@ -164,7 +163,7 @@ approval.</p>
     </div>
   </div>
 </div>
-  <div className=" flex flex-col bg-purple-600 h-[212px] w-full items-center justify-center">
+  <div id="pricing" className=" flex flex-col bg-purple-600 h-[212px] w-full items-center justify-center">
           <h1 className="text-white font-bold items-center text-[24px] mt-3">Ready to Ship Better Code?</h1>
           <p className="mt-2.5">Join 10,000+ developers who use DevLens to automate their code review cycle.</p>
           <button className="bg-white text-purple-500 mt-2.5 h-[56px] px-8 py-1  cursor-pointer" onClick={()=> navigate("/login")}>Start your First Review</button>
@@ -197,7 +196,7 @@ approval.</p>
       </div>
       <div className="flex flex-col gap-3">
         <h3 className="text-white font-semibold text-sm mb-1">Resources</h3>
-        <a href="#" className="text-[#8b949e] text-sm hover:text-white transition-colors">Documentation</a>
+        <a onClick={() => navigate("/docs")} className="text-[#8b949e] text-sm hover:text-white transition-colors cursor-pointer">Documentation</a>
         <a href="#" className="text-[#8b949e] text-sm hover:text-white transition-colors">API Reference</a>
         <a href="#" className="text-[#8b949e] text-sm hover:text-white transition-colors">Blog</a>
         <a href="#" className="text-[#8b949e] text-sm hover:text-white transition-colors">Support</a>
