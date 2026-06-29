@@ -36,6 +36,10 @@ const githubCallback = async (req,res) => {
 
     let user = await User.findOne({githubId:githubUser.id})
 
+    if(!user && githubUser.email){
+      user = await User.findOne({email:githubUser.email})
+    }
+
     if(!user){
       user = new User({
         githubId:githubUser.id,
@@ -46,7 +50,11 @@ const githubCallback = async (req,res) => {
       await user.save()
       console.log('New user created', user)
     } else {
-       console.log('User already exists:', user)
+      if(!user.githubId){
+        user.githubId = githubUser.id
+        await user.save()
+      }
+      console.log('User already exists:', user)
     }
 
       const jwtToken = jwt.sign(
