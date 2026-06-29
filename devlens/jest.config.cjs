@@ -6,21 +6,11 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(jpg|jpeg|png|gif|svg|webp|ico)$': '<rootDir>/src/__mocks__/fileMock.cjs',
   },
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: {
-        jsx: 'react-jsx',
-        esModuleInterop: true,
-        allowSyntheticDefaultImports: true,
-        moduleResolution: 'node',
-        module: 'CommonJS',
-        verbatimModuleSyntax: false,
-        lib: ['ES2023', 'DOM'],
-        target: 'ES2023',
-        types: ['jest', 'node', '@testing-library/jest-dom'],
-        skipLibCheck: true,
-      },
+      tsconfig: './tsconfig.jest.json',
     }],
   },
 };

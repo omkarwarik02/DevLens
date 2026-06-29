@@ -1,9 +1,15 @@
 import type React from "react";
-import { Navigate} from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 function ProtectedRoute({children}: {children:React.ReactNode}) {
-    const token = localStorage.getItem('token')
+    const [searchParams] = useSearchParams()
+    const urlToken = searchParams.get('token')
 
+    if(urlToken){
+        localStorage.setItem('token', urlToken)
+    }
+
+    const token = urlToken || localStorage.getItem('token')
 
     if(!token){
         return <Navigate to="/login"/>

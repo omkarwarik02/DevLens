@@ -9,6 +9,25 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+
+
+  const githubLogin = async () =>{
+    const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID
+    const redirectUri = `${import.meta.env.VITE_BACKEND_URL}/api/auth/github/callback`
+    const scope = 'user:email'
+
+    if(!clientId || !redirectUri){
+      alert('GitHub OAuth configuration missing. Check .env file.')
+      return
+    }
+     const authUrl =`https://github.com/login/oauth/authorize?` + `client_id=${clientId}&` + `redirect_uri=${encodeURIComponent(redirectUri)}&` + `scope=${scope}`
+
+     window.location.href = authUrl
+
+    
+  }
+
+ 
   const handleLogin = async () => {
     try {
       const res = await fetch(`${API_URL}/api/auth/login`, {
@@ -87,7 +106,7 @@ function Login() {
           <div className="flex-1 h-[1px] bg-[#30363d]"></div>
         </div>
         <div className="px-8 mt-4">
-          <button className="flex items-center justify-center gap-3 w-full  border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all">
+          <button className="flex items-center justify-center gap-3 w-full  border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all" onClick={githubLogin}>
             <FaGithub size={20}></FaGithub>
             <span>Continue with Github</span>
           </button>
