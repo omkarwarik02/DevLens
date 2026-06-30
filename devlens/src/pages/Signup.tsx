@@ -35,8 +35,8 @@ const handleSignUp = async () => {
 
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
-      <div className="bg-[#161B22] items-center justify-center w-[420px] pb-10">
+    <div className="flex flex-col min-h-screen items-center justify-center px-4 py-8">
+      <div className="bg-[#161B22] items-center justify-center w-full max-w-[420px] pb-10">
         <div className="flex items-center flex-col mt-10">
           <img src={download} className="w-[48px] h-[50px]" />
           <h3 className="text-[#D2BBFF] tracking-wide font-bold text-2xl mt-5">DevLens</h3>
@@ -87,7 +87,7 @@ const handleSignUp = async () => {
             className="bg-[#0D1117] border border-[#30363D] text-white text-sm rounded-md px-4 py-3 w-full placeholder-[#4B5563] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
           />
 
-          <button className="mt-6 bg-purple-600 h-[40px]" onClick={handleSignUp}>Sign Up</button>
+          <button className="mt-6 bg-purple-600 h-[40px] cursor-pointer" onClick={handleSignUp}>Sign Up</button>
         </div>
 
         <div className="flex items-center gap-3 px-8 mt-6">
@@ -97,14 +97,14 @@ const handleSignUp = async () => {
         </div>
 
         <div className="px-8 mt-4">
-          <button className="flex items-center justify-center gap-3 w-full border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all">
+          <button className="flex items-center justify-center gap-3 w-full border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all cursor-pointer">
             <FaGithub size={20} />
             <span>Continue with Github</span>
           </button>
         </div>
 
         <div className="flex items-center justify-center mt-10">
-          <h3 className="text-[14px]">Already have an account? <span className="text-purple-500" onClick={()=> navigate("/login")}>Sign In</span></h3>
+          <h3 className="text-[14px]">Already have an account? <span className="text-purple-500 cursor-pointer" onClick={()=> navigate("/login")}>Sign In</span></h3>
         </div>
       </div>
     </div>

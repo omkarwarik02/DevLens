@@ -7,38 +7,38 @@ function Landing() {
     <>
       <section>
         {/* main div*/}
-        <div className="flex justify-around min-h-screen ">
+        <div className="flex flex-col lg:flex-row justify-around min-h-screen">
           {/* left div*/}
-          <div className="flex pt-[150px] px-24 flex-col">
-            <h1 className="text-[69px] font-bold text-white leading-tight">
+          <div className="flex pt-[100px] lg:pt-[150px] px-6 lg:px-16 flex-col items-center lg:items-start text-center lg:text-left">
+            <h1 className="text-[42px] sm:text-[54px] lg:text-[69px] font-bold text-white leading-tight">
               AI-Powered Code
             </h1>
-            <h1 className="text-[69px] font-bold text-white leading-tight">
+            <h1 className="text-[42px] sm:text-[54px] lg:text-[69px] font-bold text-white leading-tight">
               Reviews for Modern
             </h1>
-            <h1 className="text-[69px] font-bold text-white leading-tight">
+            <h1 className="text-[42px] sm:text-[54px] lg:text-[69px] font-bold text-white leading-tight">
               Teams
             </h1>
 
-            <div className="fex-col mt-3 font-light text-[#CCC3D8]">
+            <div className="mt-3 font-light text-[#CCC3D8]">
               <p>
                 Paste your code and get instant, intelligent feedback on bugs,
               </p>
               <p>security, and performance.</p>
             </div>
 
-            <div className="fex-col mt-20">
-              <button className=" bg-purple-600 rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide cursor-pointer" onClick={()=> navigate("/login")}>
+            <div className="flex flex-wrap gap-4 mt-10 lg:mt-20 justify-center lg:justify-start">
+              <button className="bg-purple-600 rounded-md px-6 py-3 h-[58px] text-[16px] font-bold tracking-wide cursor-pointer" onClick={()=> navigate("/login")}>
                 Get Started For Free
               </button>
-              <button className="rounded-md text-sm px-4 py-2 h-[58px] text-[16px] font-bold tracking-wide ml-20 border border-white  cursor-pointer" onClick={() => navigate("/docs")}>
+              <button className="rounded-md px-6 py-3 h-[58px] text-[16px] font-bold tracking-wide border border-white cursor-pointer" onClick={() => navigate("/docs")}>
                 View Documentation
               </button>
             </div>
           </div>
-          <div className="flex-col  pt-[250px]">
+          <div className="flex flex-col items-center px-6 lg:px-0 pt-10 lg:pt-[250px] pb-10 lg:pb-0">
             {/* RIGHT — code mockup */}
-            <div className="bg-[#161b22] rounded-lg border border-[#30363d] w-[500px] h-[219px] items-center ">
+            <div className="bg-[#161b22] rounded-lg border border-[#30363d] w-full max-w-[500px] h-[219px] items-center">
               {/* top bar */}
               <div className="flex items-center gap-2 px-4 py-3 border-b border-[#30363d]">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -64,7 +64,7 @@ function Landing() {
 
       {/**section2 */}
       <section id="features">
-        <div className="flex flex-col min-h-screen items-center  ">
+        <div className="flex flex-col min-h-screen items-center   ">
           <div className="text-center pt-30">
             <h1 className="text-[24px] font-bold tracking-wide">
               Engineered for Effieciency
@@ -74,9 +74,9 @@ function Landing() {
             </p>
           </div>
 
-          <div className="flex gap-6 justify-evenly px-24 mt-20 pt-40">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 px-6 lg:px-24 mt-40">
 
-            <div className="h-[240px] w-[296px]  bg-[#161B22] p-4 border border-[#30363D]">
+            <div className="bg-[#161B22] p-4 border border-[#30363D]">
               <Bug className="text-purple-500" size={24}></Bug>
               <h1 className="mt-5 font-bold text-2xl">Bug Detection</h1>
               <p className="text-[14px] mt-5">
@@ -84,7 +84,7 @@ function Landing() {
                 static analysis.
               </p>
             </div>
-            <div className="h-[240px] w-[296px] bg-[#161B22] p-4 border border-[#30363D]">
+            <div className="bg-[#161B22] p-4 border border-[#30363D]">
               <Shield className="text-purple-500" size={24} />
               <h1 className="mt-5 font-bold text-2xl">Security Audits</h1>
               <p className="text-[14px] mt-5">
@@ -92,7 +92,7 @@ function Landing() {
                 to production.
               </p>
             </div>
-            <div className="h-[240px] w-[296px] bg-[#161B22] p-4 border border-[#30363D]">
+            <div className="bg-[#161B22] p-4 border border-[#30363D]">
               <Gauge className="text-purple-500" size={24} />
               <h1 className="mt-5 font-bold text-2xl">Performance Insights</h1>
               <p className="text-[14px] mt-5">
@@ -100,7 +100,7 @@ function Landing() {
                 algorithmic analysis.
               </p>
             </div>
-            <div className="h-[240px] w-[296px] bg-[#161B22] p-4 border border-[#30363D]">
+            <div className="bg-[#161B22] p-4 border border-[#30363D]">
               <History className="text-purple-500" size={24} />
               <h1 className="mt-5 font-bold text-2xl">History Tracking</h1>
               <p className="text-[14px] mt-5">
@@ -173,20 +173,20 @@ approval.</p>
 
 
       <section style={{ minHeight: "auto" }}>
-      <footer className="bg-[#0d1117] border-t border-[#30363d] px-24 py-12">
-  <div className="flex justify-between">
-    
+      <footer className="bg-[#0d1117] border-t border-[#30363d] px-6 lg:px-24 py-12">
+  <div className="flex flex-col sm:flex-row flex-wrap justify-between gap-8">
+
     {/* LEFT — logo + copyright */}
     <div className="flex flex-col gap-3">
-      <div className="flex ">
-        <img src={download} className="h-[24px] w-[24px]" alt="DevLens"></img>
-      <h1 className=" font-bold ml-2.5 text-2xl">DevLens</h1>
+      <div className="flex">
+        <img src={download} className="h-[24px] w-[24px]" alt="DevLens" />
+        <h1 className="font-bold ml-2.5 text-2xl">DevLens</h1>
       </div>
       <p className="text-xs">© 2026 DevLens Inc. All rights reserved.</p>
     </div>
 
     {/* CENTER — Product + Resources */}
-    <div className="flex gap-20">
+    <div className="flex gap-10 sm:gap-16 lg:gap-20">
       <div className="flex flex-col gap-3">
         <h3 className="text-white font-semibold text-sm mb-1">Product</h3>
         <a href="#" className="text-[#8b949e] text-sm hover:text-white transition-colors">Features</a>

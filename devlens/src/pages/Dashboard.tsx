@@ -66,10 +66,10 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] p-6">
-      <div className="flex gap-6 mt-3">
+    <div className="min-h-screen bg-[#0d1117] p-4 md:p-6">
+      <div className="flex flex-col lg:flex-row gap-6 mt-3">
         {/**left panel */}
-        <div className="w-1/2 bg-[#161b22] rounded-xl p-6">
+        <div className="w-full lg:w-1/2 bg-[#161b22] rounded-xl p-6">
           <h1 className="font-bold text-2xl">Code Review</h1>
           <div>
             <h3 className="mt-3 text-[11px]">PROGRAMMING LANGUAGE</h3>
@@ -111,7 +111,7 @@ function Dashboard() {
         </div>
 
         {/**right panel */}
-        <div className="w-1/2 bg-[#161b22] rounded-xl p-6 flex flex-col">
+        <div className="w-full lg:w-1/2 bg-[#161b22] rounded-xl p-6 flex flex-col">
           <h1>AI Review</h1>
           <hr className="border-gray-700 my-4"></hr>
 

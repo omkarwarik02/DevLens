@@ -46,10 +46,10 @@ function Login() {
   };
 
   return (
-    <div className=" flex flex-col min-h-screen items-center justify-center  ">
-      <div className=" bg-[#161B22] items-center justify-center w-[420px] h-[750px]">
-        <div className="flex items-center flex-col mt-10">
-          <img src={download} className="w-[48px] h-[50px]"></img>
+    <div className="flex flex-col min-h-screen items-center justify-center px-4 py-8">
+      <div className="bg-[#161B22] items-center justify-center w-full max-w-[420px]">
+        <div className="flex items-center flex-col mt-10 pb-10">
+          <img src={download} className="w-[48px] h-[50px]" />
           <h3 className=" text-[#D2BBFF] tracking-wide font-bold text-2xl mt-5">
             DevLens
           </h3>
@@ -95,7 +95,7 @@ function Login() {
             Forgot password?
           </a>
 
-          <button className="mt-6 bg-purple-600 h-[40px]" onClick={handleLogin}>
+          <button className="mt-6 bg-purple-600 h-[40px] cursor-pointer" onClick={handleLogin}>
             Sign In
           </button>
         </div>
@@ -106,16 +106,16 @@ function Login() {
           <div className="flex-1 h-[1px] bg-[#30363d]"></div>
         </div>
         <div className="px-8 mt-4">
-          <button className="flex items-center justify-center gap-3 w-full  border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all" onClick={githubLogin}>
+          <button className="flex items-center justify-center gap-3 w-full  border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all cursor-pointer" onClick={githubLogin}>
             <FaGithub size={20}></FaGithub>
             <span>Continue with Github</span>
           </button>
         </div>
-        <div className="flex items-center justify-center mt-10">
+        <div className="flex items-center justify-center mt-6 mb-6">
           <h3 className="text-[14px]">
             Don't have an account?{" "}
             <span
-              className="text-purple-500"
+              className="text-purple-500 cursor-pointer"
               onClick={() => navigate("/signup")}
             >
               Sign Up
