@@ -3,11 +3,13 @@ import download from "../assets/download.jpg";
 import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import API_URL from "../config";
+import { useAuth } from "../components/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
 
 
@@ -36,8 +38,7 @@ function Login() {
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("name", data.name);
+      login(data.token, data.name);
       navigate("/dashboard");
     } catch (error) {
       console.error(error);

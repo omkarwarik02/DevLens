@@ -2,15 +2,16 @@ import { useState } from 'react'
 import download from '../assets/download.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserRound, Menu, X } from 'lucide-react'
+import { useAuth } from './AuthContext'
 
 function Navbar() {
-  const name = localStorage.getItem("name")?.trim().split(" ")[0]
+  const { name: fullName, logout } = useAuth()
+  const name = fullName?.trim().split(" ")[0]
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
 
   const handleLogout = () => {
-    localStorage.removeItem("token")
-    localStorage.removeItem("name")
+    logout()
     navigate("/login")
   }
 
