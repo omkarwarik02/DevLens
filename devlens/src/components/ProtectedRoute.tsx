@@ -1,19 +1,25 @@
 import type React from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import { useEffect } from "react";
 
 function ProtectedRoute({children}: {children:React.ReactNode}) {
     const [searchParams] = useSearchParams()
-    const urlToken = searchParams.get('token')
+   const {token , login} = useAuth();
 
-    if(urlToken){
-        localStorage.setItem('token', urlToken)
+   const urlToken = searchParams.get('token');
+   const urlName = searchParams.get('name');
+
+   useEffect(()=> {
+    if(urlToken && urlName){
+        login(urlToken,urlName);
     }
+   },[urlToken,urlToken])
 
-    const token = urlToken || localStorage.getItem('token')
-
-    if(!token){
-        return <Navigate to="/login"/>
-    }
+   const isAuthed = token || urlToken;
+   if(!isAuthed){
+    return <Navigate to="/login" />
+   }
     return children
 }
 

@@ -48,6 +48,7 @@ const githubCallback = async (req,res) => {
         avatar:githubUser.avatar_url
       })
       await user.save()
+      
       console.log('New user created', user)
     } else {
       if(!user.githubId){
@@ -65,7 +66,7 @@ const githubCallback = async (req,res) => {
 
       console.log('Generated JWT:',jwtToken)
 
-      res.redirect(`${process.env.FRONTEND_URL.replace(/\/$/, '')}/dashboard?token=${jwtToken}`)
+      res.redirect(`${process.env.FRONTEND_URL.replace(/\/$/, '')}/dashboard?token=${jwtToken}&name=${encodeURIComponent(user.name)}`)
 
 
 
