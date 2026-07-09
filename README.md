@@ -22,7 +22,7 @@ DevLens is a full-stack web application that allows developers to paste any code
 - React Query
 - Tailwind CSS
 
-### Backend (coming soon)
+### Backend 
 - Node.js + Express
 - MongoDB + Mongoose
 - JWT Authentication
