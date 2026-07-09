@@ -4,7 +4,7 @@ const router = express.Router()
 
 
 
-router.get('/health',(req,res)=>{
+router.get('/',(req,res)=>{
     res.status(200).json({status:'ok',time:new Date().toISOString()});
 });
 
