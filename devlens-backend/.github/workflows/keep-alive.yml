@@ -1,0 +1,14 @@
+
+name :  Backend Keep-Alive
+
+on:
+    schedule:
+        - cron: '*/10 * * * *'
+    workflow_dispatch:
+
+jobs:
+    ping:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Ping health endpoint
+              run:  curl --fail https://devlens-backend-60v2.onrender.com/health
