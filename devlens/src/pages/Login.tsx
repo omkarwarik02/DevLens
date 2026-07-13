@@ -4,33 +4,42 @@ import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import API_URL from "../config";
 import { useAuth } from "../components/AuthContext";
+import { LoginFormErrors, validateLoginForm } from "../utils/validators";
 
 function Login() {
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<LoginFormErrors>({});
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  const githubLogin = async () => {
+    const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
+    const redirectUri = `${import.meta.env.VITE_BACKEND_URL}/api/auth/github/callback`;
+    const scope = "user:email";
 
-
-  const githubLogin = async () =>{
-    const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID
-    const redirectUri = `${import.meta.env.VITE_BACKEND_URL}/api/auth/github/callback`
-    const scope = 'user:email'
-
-    if(!clientId || !redirectUri){
-      alert('GitHub OAuth configuration missing. Check .env file.')
-      return
+    if (!clientId || !redirectUri) {
+      alert("GitHub OAuth configuration missing. Check .env file.");
+      return;
     }
-     const authUrl =`https://github.com/login/oauth/authorize?` + `client_id=${clientId}&` + `redirect_uri=${encodeURIComponent(redirectUri)}&` + `scope=${scope}`
+    const authUrl =
+      `https://github.com/login/oauth/authorize?` +
+      `client_id=${clientId}&` +
+      `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+      `scope=${scope}`;
 
-     window.location.href = authUrl
+    window.location.href = authUrl;
+  };
 
-    
-  }
-
- 
   const handleLogin = async () => {
+    const validationErrors = validateLoginForm(email, password);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    setLoading(true);
     try {
       const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
@@ -38,11 +47,18 @@ function Login() {
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
+
+      if (!res.ok) {
+        setErrors({ form: data.message || "Login failed. Please try again." });
+        return;
+      }
       login(data.token, data.name);
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
-      alert("Login failed. Please try again.");
+      setErrors({ form: "Login failed. Please try again." });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,6 +89,9 @@ function Login() {
             placeholder="you@example.com"
             className="bg-[#0D1117] border border-[#30363D] text-white text-sm rounded-md px-4 py-3 w-full placeholder-[#4B5563] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
           />
+          {errors.email && (
+            <span className="text-red-400 text-xs mt-1">{errors.email}</span>
+          )}
         </div>
 
         <div className="flex flex-col mx-8">
@@ -89,15 +108,25 @@ function Login() {
             placeholder="••••••••"
             className="bg-[#0D1117] border border-[#30363D] text-white text-sm rounded-md px-4 py-3 w-full placeholder-[#4B5563] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
           />
+          {errors.password && (
+            <span className="text-red-400 text-xs mt-1">{errors.password}</span>
+          )}
           <a
             href="#"
             className="text-purple-400 text-xs mt-2 self-end hover:text-purple-300"
           >
             Forgot password?
           </a>
-
-          <button className="mt-6 bg-purple-600 h-[40px] cursor-pointer" onClick={handleLogin}>
-            Sign In
+          {errors.form && (
+            <span className="text-red-400 text-xs mt-2">{errors.form}</span>
+          )}
+          <button
+            className="mt-6 bg-purple-600 h-[40px] cursor-pointer"
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          
           </button>
         </div>
 
@@ -107,7 +136,10 @@ function Login() {
           <div className="flex-1 h-[1px] bg-[#30363d]"></div>
         </div>
         <div className="px-8 mt-4">
-          <button className="flex items-center justify-center gap-3 w-full  border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all cursor-pointer" onClick={githubLogin}>
+          <button
+            className="flex items-center justify-center gap-3 w-full  border border-[#30363d] px-4 py-3 rounded-md hover:bg-[#30363d] transition-all cursor-pointer"
+            onClick={githubLogin}
+          >
             <FaGithub size={20}></FaGithub>
             <span>Continue with Github</span>
           </button>
