@@ -4,7 +4,8 @@ import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import API_URL from "../config";
 import { useAuth } from "../components/AuthContext";
-import { LoginFormErrors, validateLoginForm } from "../utils/validators";
+import type { LoginFormErrors } from "../utils/validators";
+import { validateLoginForm } from "../utils/validators";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -49,7 +50,20 @@ function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrors({ form: data.message || "Login failed. Please try again." });
+        if (Array.isArray(data.errors) && data.errors.length > 0) {
+          const fieldErrors: LoginFormErrors = {};
+          data.errors.forEach((err: { field?: string; message: string }) => {
+            if (err.field === "email") fieldErrors.email = err.message;
+            else if (err.field === "password") fieldErrors.password = err.message;
+            else fieldErrors.form = err.message;
+          });
+          if (!fieldErrors.email && !fieldErrors.password && !fieldErrors.form) {
+            fieldErrors.form = "Login failed. Please try again.";
+          }
+          setErrors(fieldErrors);
+        } else {
+          setErrors({ form: data.message || "Login failed. Please try again." });
+        }
         return;
       }
       login(data.token, data.name);

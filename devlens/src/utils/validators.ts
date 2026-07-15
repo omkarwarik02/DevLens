@@ -29,3 +29,39 @@ export const validateLoginForm = (email: string, password: string): LoginFormErr
 
     return errors;
 }
+
+export interface SignupFormErrors {
+    name?:string;
+    email?:string;
+    password?:string;
+    confirmPassword?:string;
+    form?:string;
+}
+
+export const validateName = (name:string):string => {
+    if(!name.trim()) return 'Name is required';
+    return '';
+};
+
+export const validateConfirmPassword = (password:string, confirmPassword:string):string => {
+    if(!confirmPassword) return 'Please confirm your password';
+    if(password !== confirmPassword) return 'Passwords do not match';
+    return '';
+};
+
+export const validateSignupForm = (name:string, email:string, password:string, confirmPassword:string): SignupFormErrors => {
+    const errors: SignupFormErrors = {};
+    const nameError = validateName(name);
+    if(nameError) errors.name = nameError;
+
+    const emailError = validateEmail(email);
+    if(emailError) errors.email = emailError;
+
+    const passwordError = validatePassword(password);
+    if(passwordError) errors.password = passwordError;
+
+    const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
+    if(confirmPasswordError) errors.confirmPassword = confirmPasswordError;
+
+    return errors;
+}

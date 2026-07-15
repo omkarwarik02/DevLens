@@ -3,32 +3,60 @@ import download from "../assets/download.jpg"
 import { FaGithub } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom"
 import API_URL from "../config"
+import type { SignupFormErrors } from "../utils/validators"
+import { validateSignupForm } from "../utils/validators"
 
 function Signup() {
   const [name,setName] =useState("")
 const[email,setEmail] = useState("")
 const [password,setPassword] = useState("")
 const [confirmPassword, setConfirmPassword] = useState("")
+const [errors, setErrors] = useState<SignupFormErrors>({})
+const [loading, setLoading] = useState(false)
 const navigate = useNavigate()
 
 
+
 const handleSignUp = async () => {
+  const validationErrors = validateSignupForm(name, email, password, confirmPassword)
+  if(Object.keys(validationErrors).length > 0){
+    setErrors(validationErrors)
+    return
+  }
+  setErrors({})
+  setLoading(true)
   try {
-    if(password !== confirmPassword){
-      alert("Password do not match!")
-      return
-    }
     const res = await fetch(`${API_URL}/api/auth/signup`,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({name,email,password})
     })
     const data = await res.json()
-    localStorage.setItem("token",data.token)
+
+    if(!res.ok){
+      if(Array.isArray(data.errors) && data.errors.length > 0){
+        const fieldErrors: SignupFormErrors = {}
+        data.errors.forEach((err: { field?: string; message: string }) => {
+          if(err.field === "name") fieldErrors.name = err.message
+          else if(err.field === "email") fieldErrors.email = err.message
+          else if(err.field === "password") fieldErrors.password = err.message
+          else fieldErrors.form = err.message
+        })
+        if(!fieldErrors.name && !fieldErrors.email && !fieldErrors.password && !fieldErrors.form){
+          fieldErrors.form = "Sign up failed. Please try again."
+        }
+        setErrors(fieldErrors)
+      } else {
+        setErrors({ form: data.message || "Sign up failed. Please try again." })
+      }
+      return
+    }
     navigate("/login")
   }catch(err){
     console.error(err)
-    alert("SignUp failed try again")
+    setErrors({ form: "Sign up failed. Please try again." })
+  } finally {
+    setLoading(false)
   }
 }
 
@@ -53,6 +81,9 @@ const handleSignUp = async () => {
             placeholder="John Doe"
             className="bg-[#0D1117] border border-[#30363D] text-white text-sm rounded-md px-4 py-3 w-full placeholder-[#4B5563] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
           />
+          {errors.name && (
+            <span className="text-red-400 text-xs mt-1">{errors.name}</span>
+          )}
         </div>
 
         <div className="flex flex-col mx-8">
@@ -64,6 +95,9 @@ const handleSignUp = async () => {
             placeholder="you@example.com"
             className="bg-[#0D1117] border border-[#30363D] text-white text-sm rounded-md px-4 py-3 w-full placeholder-[#4B5563] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
           />
+          {errors.email && (
+            <span className="text-red-400 text-xs mt-1">{errors.email}</span>
+          )}
         </div>
 
         <div className="flex flex-col mx-8">
@@ -75,6 +109,9 @@ const handleSignUp = async () => {
             placeholder="••••••••"
             className="bg-[#0D1117] border border-[#30363D] text-white text-sm rounded-md px-4 py-3 w-full placeholder-[#4B5563] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
           />
+          {errors.password && (
+            <span className="text-red-400 text-xs mt-1">{errors.password}</span>
+          )}
         </div>
 
         <div className="flex flex-col mx-8">
@@ -86,8 +123,17 @@ const handleSignUp = async () => {
             placeholder="••••••••"
             className="bg-[#0D1117] border border-[#30363D] text-white text-sm rounded-md px-4 py-3 w-full placeholder-[#4B5563] focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
           />
+          {errors.confirmPassword && (
+            <span className="text-red-400 text-xs mt-1">{errors.confirmPassword}</span>
+          )}
 
-          <button className="mt-6 bg-purple-600 h-[40px] cursor-pointer" onClick={handleSignUp}>Sign Up</button>
+          {errors.form && (
+            <span className="text-red-400 text-xs mt-2">{errors.form}</span>
+          )}
+
+          <button className="mt-6 bg-purple-600 h-[40px] cursor-pointer" onClick={handleSignUp} disabled={loading}>
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
         </div>
 
         <div className="flex items-center gap-3 px-8 mt-6">
