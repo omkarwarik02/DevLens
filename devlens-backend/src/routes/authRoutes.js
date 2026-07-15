@@ -2,7 +2,7 @@
 const {signUp,login, githubCallback} = require('../controllers/authController');
 const express = require('express');  
 const router = express.Router();
-const validate = require('../middleware/validate');
+const validate = require('../middleware/Validate');
 const { loginValidationRules } = require('../validators/authValidators');
 
 router.post('/signup', signUp)
