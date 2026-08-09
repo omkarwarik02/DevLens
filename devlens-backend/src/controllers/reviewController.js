@@ -1,7 +1,10 @@
 const Groq = require("groq-sdk");
 const Review = require("../models/Review");
-
+const { wrapWithLogging, getCounts,getAgentCounts,callLog } = require("../utils/agentAudit");
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+
+const loggedGroqCall = wrapWithLogging((payload)=> groq.chat.completions.create(payload),"groq_review");
 
 const reviewCode = async (req, res) => {
   try {
@@ -13,7 +16,7 @@ const reviewCode = async (req, res) => {
         .json({ message: "Code and language are required" });
     }
 
-    const response = await groq.chat.completions.create({
+    const response = await loggedGroqCall(req.user.id,{
       model: "llama-3.3-70b-versatile",
       messages: [
         {
@@ -22,6 +25,7 @@ const reviewCode = async (req, res) => {
         },
       ],
     });
+    console.log("Current callLog:", callLog);
     const aiReview = response.choices[0]?.message?.content || "";
 
     await Review.create({
@@ -31,6 +35,7 @@ const reviewCode = async (req, res) => {
       aiReview,
     });
     res.status(200).json({ aiReview });
+    
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
